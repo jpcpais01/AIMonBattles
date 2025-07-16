@@ -1,12 +1,12 @@
 // Enhanced service worker for PWA
-const CACHE_NAME = 'ai-monster-battles-v2';
+const CACHE_NAME = 'ai-monster-battles-v3';
 const urlsToCache = [
   '/',
   '/static/js/bundle.js',
   '/static/css/main.css',
   '/manifest.json',
   '/favicon.ico',
-  '/logo192.png',
+  '/logo180.png',
   '/logo512.png'
 ];
 
