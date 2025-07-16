@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { getTypeColor } from '../data/cards';
 import './GeneratedImage.css';
+import Multiplayer from './Multiplayer';
 
 const GeneratedImage = ({ imageUrl, prompt, selectedCards, totalPower, monsterStats, isGenerating, onRestart }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
   const [showImagePopup, setShowImagePopup] = useState(false);
+  const [showMultiplayer, setShowMultiplayer] = useState(false);
 
   const getPowerColor = (power) => {
     if (power >= 100) return '#ff0066'; // Ultimate - Hot Pink
@@ -163,6 +165,15 @@ const GeneratedImage = ({ imageUrl, prompt, selectedCards, totalPower, monsterSt
             </button>
             
             <button 
+              className="action-button multiplayer-button"
+              onClick={() => setShowMultiplayer(true)}
+              disabled={!imageUrl || !monsterStats}
+            >
+              <span>⚔️</span>
+              <span>Join Multiplayer</span>
+            </button>
+            
+            <button 
               className="action-button restart-button"
               onClick={onRestart}
             >
@@ -224,6 +235,20 @@ const GeneratedImage = ({ imageUrl, prompt, selectedCards, totalPower, monsterSt
             </button>
           </div>
         </div>
+      )}
+
+      {/* Multiplayer Modal */}
+      {showMultiplayer && imageUrl && monsterStats && (
+        <Multiplayer 
+          monster={{
+            name: monsterStats.name,
+            description: monsterStats.description,
+            abilities: monsterStats.abilities,
+            image: imageUrl,
+            prompt: prompt
+          }}
+          onClose={() => setShowMultiplayer(false)}
+        />
       )}
     </div>
   );
