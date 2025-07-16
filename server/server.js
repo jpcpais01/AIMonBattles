@@ -3,6 +3,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
+const os = require('os');
 require('dotenv').config();
 
 const app = express();
@@ -275,9 +276,27 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Get local network IP address
+const getLocalIP = () => {
+  const interfaces = os.networkInterfaces();
+  for (const name of Object.keys(interfaces)) {
+    for (const interface of interfaces[name]) {
+      if (interface.family === 'IPv4' && !interface.internal) {
+        return interface.address;
+      }
+    }
+  }
+  return 'localhost';
+};
+
 // Start server
 const PORT = process.env.PORT || 3002;
-server.listen(PORT, () => {
+const HOST = '0.0.0.0'; // Bind to all interfaces for mobile access
+const localIP = getLocalIP();
+
+server.listen(PORT, HOST, () => {
   console.log(`🚀 AI Monster Battles server running on port ${PORT}`);
-  console.log(`🌐 Health check: http://localhost:${PORT}/health`);
+  console.log(`🌐 Local access: http://localhost:${PORT}/health`);
+  console.log(`📱 Mobile access: http://${localIP}:${PORT}/health`);
+  console.log(`🎮 For mobile devices, use: http://${localIP}:${PORT}`);
 }); 

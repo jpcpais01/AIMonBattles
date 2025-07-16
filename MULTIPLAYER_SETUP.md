@@ -40,12 +40,20 @@ cd server
 npm start
 ```
 *Server will run on http://localhost:3002*
+*The server will also display your local IP address for mobile access*
 
 **Terminal 2 - Start the React app:**
 ```bash
 npm start
 ```
 *App will run on http://localhost:3000 or 3001*
+
+### 📱 **Mobile Access Setup:**
+
+1. **Find your computer's IP address** (displayed when server starts)
+2. **On your mobile device**, navigate to: `http://YOUR_IP_ADDRESS:3000`
+3. **The app will automatically connect** to the multiplayer server
+4. **Generate monsters and battle** from any device on your network!
 
 ## 🎯 How Multiplayer Works
 

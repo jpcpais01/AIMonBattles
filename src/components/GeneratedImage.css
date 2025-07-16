@@ -26,14 +26,16 @@
   margin: 0;
 }
 
-/* Loading State */
+/* Enhanced Loading State */
 .generating-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 400px;
+  min-height: 500px;
   text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .loading-spinner {
@@ -100,12 +102,313 @@
   100% { transform: rotate(360deg); }
 }
 
+/* AI Forge Animation */
+.ai-forge-animation {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.energy-orb {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.orb-core {
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, #00ffff 0%, #0088ff 50%, #0044aa 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff88, 0 0 60px #00ffff44;
+  animation: coreGlow 2s ease-in-out infinite alternate;
+}
+
+.energy-pulse {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 2px solid #00ffff;
+  border-radius: 50%;
+  animation: energyPulse 2s ease-out infinite;
+}
+
+.energy-pulse:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.energy-pulse:nth-child(3) {
+  animation-delay: 1s;
+}
+
+.energy-pulse:nth-child(4) {
+  animation-delay: 1.5s;
+}
+
+.forge-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #ff00ff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ff00ff;
+  animation: particleFloat 3s ease-in-out infinite;
+}
+
+.particle:nth-child(1) {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+  background: #00ffff;
+  box-shadow: 0 0 10px #00ffff;
+}
+
+.particle:nth-child(2) {
+  top: 30%;
+  right: 20%;
+  animation-delay: 0.5s;
+  background: #ff00ff;
+  box-shadow: 0 0 10px #ff00ff;
+}
+
+.particle:nth-child(3) {
+  bottom: 25%;
+  left: 25%;
+  animation-delay: 1s;
+  background: #00ff80;
+  box-shadow: 0 0 10px #00ff80;
+}
+
+.particle:nth-child(4) {
+  bottom: 35%;
+  right: 15%;
+  animation-delay: 1.5s;
+  background: #ffff00;
+  box-shadow: 0 0 10px #ffff00;
+}
+
+.particle:nth-child(5) {
+  top: 50%;
+  left: 5%;
+  animation-delay: 2s;
+  background: #ff8000;
+  box-shadow: 0 0 10px #ff8000;
+}
+
+.particle:nth-child(6) {
+  top: 60%;
+  right: 10%;
+  animation-delay: 2.5s;
+  background: #8000ff;
+  box-shadow: 0 0 10px #8000ff;
+}
+
+.loading-spinner {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  z-index: 1;
+}
+
+/* Generation Status */
+.generation-status {
+  max-width: 400px;
+  width: 100%;
+}
+
 .generating-text {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 600;
   color: #00ffff;
   margin-bottom: 0.5rem;
-  animation: pulse 2s infinite;
+  animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+.generating-subtitle {
+  font-size: 1.1rem;
+  color: #ff00ff;
+  margin-bottom: 1.5rem;
+  animation: textGlow 2s ease-in-out infinite alternate;
+  animation-delay: 0.5s;
+}
+
+.generation-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.step {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: stepPulse 3s ease-in-out infinite;
+}
+
+.step.active {
+  color: #00ffff;
+  border-color: #00ffff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+/* Keyframes */
+@keyframes coreGlow {
+  from { 
+    box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff88, 0 0 60px #00ffff44;
+    transform: scale(1);
+  }
+  to { 
+    box-shadow: 0 0 30px #00ffff, 0 0 60px #00ffff88, 0 0 90px #00ffff44;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes energyPulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes particleFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 1;
+  }
+}
+
+@keyframes textGlow {
+  from { text-shadow: 0 0 10px currentColor; }
+  to { text-shadow: 0 0 20px currentColor, 0 0 30px currentColor; }
+}
+
+@keyframes stepPulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Responsive Design for Animation */
+@media (max-width: 768px) {
+  .generating-container {
+    min-height: 400px;
+    padding: 1rem;
+  }
+  
+  .ai-forge-animation {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .energy-orb {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .orb-core {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .energy-pulse {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .loading-spinner {
+    width: 90px;
+    height: 90px;
+  }
+  
+  .generating-text {
+    font-size: 1.3rem;
+  }
+  
+  .generating-subtitle {
+    font-size: 1rem;
+  }
+  
+  .generation-steps {
+    gap: 0.3rem;
+  }
+  
+  .step {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .generating-container {
+    min-height: 350px;
+    padding: 0.5rem;
+  }
+  
+  .ai-forge-animation {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1rem;
+  }
+  
+  .energy-orb {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .orb-core {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .energy-pulse {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .loading-spinner {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .generating-text {
+    font-size: 1.2rem;
+  }
+  
+  .generating-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .particle {
+    width: 3px;
+    height: 3px;
+  }
 }
 
 .generating-subtitle {

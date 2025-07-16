@@ -36,13 +36,36 @@ const GeneratedImage = ({ imageUrl, prompt, selectedCards, totalPower, monsterSt
 
       {isGenerating ? (
         <div className="generating-container">
-          <div className="loading-spinner">
-            <div className="spinner-ring"></div>
-            <div className="spinner-ring"></div>
-            <div className="spinner-ring"></div>
+          <div className="ai-forge-animation">
+            <div className="energy-orb">
+              <div className="orb-core"></div>
+              <div className="energy-pulse"></div>
+              <div className="energy-pulse"></div>
+              <div className="energy-pulse"></div>
+            </div>
+            <div className="forge-particles">
+              <div className="particle"></div>
+              <div className="particle"></div>
+              <div className="particle"></div>
+              <div className="particle"></div>
+              <div className="particle"></div>
+              <div className="particle"></div>
+            </div>
+            <div className="loading-spinner">
+              <div className="spinner-ring"></div>
+              <div className="spinner-ring"></div>
+              <div className="spinner-ring"></div>
+            </div>
           </div>
-          <h3 className="generating-text">Forging your creature...</h3>
-          <p className="generating-subtitle">Channeling {totalPower} power points</p>
+          <div className="generation-status">
+            <h3 className="generating-text">🔮 AI Forging Your Creature...</h3>
+            <p className="generating-subtitle">⚡ Channeling {totalPower} power points</p>
+            <div className="generation-steps">
+              <div className="step active">🧠 Analyzing cards</div>
+              <div className="step active">🎨 Generating image</div>
+              <div className="step active">✨ Crafting stats</div>
+            </div>
+          </div>
         </div>
       ) : (
         <div className="result-content">
