@@ -61,6 +61,9 @@ const callHuggingFaceAPI = async (prompt, model, retries = 3) => {
       if (response.status === 401) {
         throw new Error('Invalid API key! Please check your Hugging Face API key.');
       }
+      if (response.status === 402) {
+        throw new Error('Payment Required! Your Hugging Face API key has reached its quota or billing limit. Please check your account at https://huggingface.co/settings/billing');
+      }
       if (response.status === 503) {
         const errorText = await response.text();
         if (errorText.includes('loading') && retries > 0) {

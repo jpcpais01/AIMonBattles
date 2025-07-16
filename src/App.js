@@ -152,6 +152,9 @@ function App() {
         if (error.message.includes('API key')) {
           console.log('⚠️  API key issue - check your Hugging Face API key');
           alert('⚠️  Please configure your Hugging Face API key!\n\n1. Go to https://huggingface.co/settings/tokens\n2. Create a new token\n3. Set REACT_APP_HF_API_KEY in your environment or replace in code');
+        } else if (error.message.includes('Payment Required')) {
+          console.log('💰 Payment required - check your Hugging Face billing');
+          alert('💰 Hugging Face API Payment Required!\n\nYour API key has reached its quota or billing limit.\n\n1. Go to https://huggingface.co/settings/billing\n2. Check your usage and billing status\n3. Upgrade your plan if needed\n\nFor now, using placeholder image...');
         } else {
           console.log('💥 API failed, falling back to placeholder...');
         }
@@ -197,7 +200,12 @@ function App() {
     setMonsterStats(null);
     setGamePhase('selection');
     setSkipCount(0);
-    loadNewCards();
+    setCurrentCards([]); // Clear current cards first
+    
+    // Use setTimeout to ensure state is cleared before loading new cards
+    setTimeout(() => {
+      loadNewCards();
+    }, 0);
   };
 
   const getCurrentCard = () => {
@@ -207,11 +215,33 @@ function App() {
     return null;
   };
 
+  const getCardDisplayState = () => {
+    // Check if we've reached limits
+    if (selectedCards.length >= maxCards) {
+      return { type: 'maxCards', message: 'Maximum cards reached! Ready to forge your monster.' };
+    }
+    
+    if (skipCount >= maxSkips) {
+      return { type: 'maxSkips', message: 'Maximum skips reached! Please select from remaining cards.' };
+    }
+    
+    // Check if we have a current card
+    const currentCard = getCurrentCard();
+    if (currentCard) {
+      return { type: 'card', card: currentCard };
+    }
+    
+    // No cards available
+    return { type: 'noCards', message: 'No more cards available. Generate your monster!' };
+  };
+
   const currentPower = calculateTotalPower(selectedCards);
   const canGenerate = selectedCards.length >= 3 && currentPower >= 50; // Minimum 3 cards and 50 power
   const isPowerFull = currentPower >= 100;
   const isCardsMaxed = selectedCards.length >= maxCards;
   const isSkipsMaxed = skipCount >= maxSkips;
+
+  const cardState = getCardDisplayState();
 
   return (
     <div className="App">
@@ -273,11 +303,11 @@ function App() {
 
             {/* Card Stack */}
             <div className="card-stack">
-              {getCurrentCard() && (
+              {cardState.type === 'card' && (
                 <SwipeCard 
-                  card={getCurrentCard()}
+                  card={cardState.card}
                   onSwipe={handleCardSwipe}
-                  key={getCurrentCard().id}
+                  key={cardState.card.id}
                   currentPower={currentPower}
                   maxPower={100}
                   skipCount={skipCount}
@@ -286,10 +316,52 @@ function App() {
                   maxCards={maxCards}
                 />
               )}
+              {cardState.type === 'maxCards' && (
+                <div className="card-message">
+                  <p>{cardState.message}</p>
+                  {canGenerate && (
+                    <button 
+                      className={`generate-button ${isPowerFull ? 'full-power' : ''}`}
+                      onClick={handleGenerateImage}
+                      disabled={isGenerating}
+                    >
+                      {isGenerating ? (
+                        <span>⚡ Forging...</span>
+                      ) : (
+                        <span>
+                          {isPowerFull ? '🔥 Forge Ultimate Creature' : `⚡ Forge Creature (${currentPower}/100)`}
+                        </span>
+                      )}
+                    </button>
+                  )}
+                </div>
+              )}
+              {cardState.type === 'maxSkips' && (
+                <div className="card-message">
+                  <p>{cardState.message}</p>
+                  <button 
+                    className="start-button"
+                    onClick={loadNewCards}
+                  >
+                    Load New Cards
+                  </button>
+                </div>
+              )}
+              {cardState.type === 'noCards' && (
+                <div className="card-message">
+                  <p>{cardState.message}</p>
+                  <button 
+                    className="start-button"
+                    onClick={handleRestart}
+                  >
+                    Restart Game
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Generate Button */}
-            {canGenerate && (
+            {canGenerate && cardState.type === 'card' && (
               <button 
                 className={`generate-button ${isPowerFull ? 'full-power' : ''}`}
                 onClick={handleGenerateImage}
