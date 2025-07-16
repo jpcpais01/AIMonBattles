@@ -1,8 +1,10 @@
 .App {
-  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow: hidden;
   
   /* Prevent pull-to-refresh and native browser behaviors */
   overscroll-behavior: none;
@@ -29,16 +31,17 @@
 /* Header Styles */
 .app-header {
   text-align: center;
-  padding: 1.5rem 1rem 1rem;
+  padding: 1rem 1rem 0.5rem;
   position: relative;
   z-index: 10;
+  flex-shrink: 0;
 }
 
 .app-title {
   margin: 0;
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .title-gradient {
@@ -129,17 +132,22 @@
   margin: 0 auto;
   width: 100%;
   min-height: 0;
+  overflow: hidden;
+  justify-content: space-between;
 }
 
 /* Card Stack */
 .card-stack {
   position: relative;
-  height: 500px;
-  margin: 0.5rem 0;
+  flex: 1;
+  min-height: 300px;
+  max-height: 500px;
+  margin: 0.3rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 /* Action Buttons */
@@ -275,24 +283,25 @@
 /* Footer */
 .app-footer {
   text-align: center;
-  padding: 0.5rem;
+  padding: 0.3rem;
   color: rgba(255, 255, 255, 0.5);
-  font-size: 0.8rem;
-  margin-top: auto;
+  font-size: 0.7rem;
+  flex-shrink: 0;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .app-header {
-    padding: 1rem 1rem 0.8rem;
+    padding: 0.8rem 1rem 0.4rem;
   }
   
   .app-title {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
   
   .card-stack {
-    height: 420px;
+    min-height: 280px;
+    max-height: 420px;
   }
   
   .swipe-card {
@@ -301,17 +310,17 @@
   }
   
   .generate-button {
-    padding: 0.7rem 1.4rem;
+    padding: 0.6rem 1.2rem;
     font-size: 0.8rem;
   }
   
   .power-indicator {
-    padding: 0.4rem 0.8rem;
+    padding: 0.3rem 0.6rem;
     font-size: 0.8rem;
   }
   
   .instructions-modal {
-    padding: 1.5rem;
+    padding: 1.2rem;
   }
 }
 
@@ -321,16 +330,17 @@
   }
   
   .app-header {
-    padding: 0.8rem 0.5rem 0.5rem;
+    padding: 0.6rem 0.5rem 0.3rem;
   }
   
   .app-title {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
   
   .card-stack {
-    height: 360px;
-    margin: 0.3rem 0;
+    min-height: 250px;
+    max-height: 360px;
+    margin: 0.2rem 0;
   }
   
   .swipe-card {
@@ -339,17 +349,17 @@
   }
   
   .generate-button {
-    padding: 0.6rem 1.2rem;
+    padding: 0.5rem 1rem;
     font-size: 0.75rem;
   }
   
   .power-indicator {
-    padding: 0.3rem 0.6rem;
+    padding: 0.2rem 0.5rem;
     font-size: 0.75rem;
   }
   
   .app-footer {
-    padding: 0.3rem;
-    font-size: 0.7rem;
+    padding: 0.2rem;
+    font-size: 0.6rem;
   }
 } 

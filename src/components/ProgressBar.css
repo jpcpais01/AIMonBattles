@@ -93,35 +93,36 @@
 }
 
 .selected-cards {
-  margin-top: 1.2rem;
-  max-height: 80px;
-  overflow-y: auto;
+  margin-top: 0.8rem;
+  max-height: none;
+  overflow: hidden;
   padding: 0.2rem 0;
 }
 
 .selected-cards-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
-  padding: 0.3rem 0;
+  gap: 0.3rem;
+  padding: 0.2rem 0;
+  justify-content: center;
 }
 
 .selected-card-item {
   display: inline-block;
-  padding: 0.25rem 0.6rem;
-  border-radius: 15px;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
   color: white;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 600;
   min-width: auto;
   text-align: center;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   animation: slideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  transform: translateY(15px);
+  transform: translateY(10px);
   opacity: 0;
   border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(5px);
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
 }
 
 @keyframes slideIn {
@@ -133,42 +134,25 @@
 
 .selected-card-power {
   font-weight: 700;
-  font-size: 0.9rem;
-  margin-bottom: 0.2rem;
+  font-size: 0.8rem;
+  margin-bottom: 0.1rem;
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 .selected-card-text {
   font-weight: 600;
-  margin-bottom: 0.2rem;
-  font-size: 0.7rem;
+  margin-bottom: 0.1rem;
+  font-size: 0.65rem;
 }
 
 .selected-card-type {
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   opacity: 0.8;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
-/* Scrollbar for selected cards */
-.selected-cards::-webkit-scrollbar {
-  width: 4px;
-}
-
-.selected-cards::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
-}
-
-.selected-cards::-webkit-scrollbar-thumb {
-  background: rgba(0, 255, 255, 0.5);
-  border-radius: 2px;
-}
-
-.selected-cards::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 255, 255, 0.7);
-}
+/* Scrollbar removed - no scrolling needed */
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -187,7 +171,7 @@
   }
   
   .selected-cards {
-    max-height: 60px;
+    margin-top: 0.6rem;
   }
   
   .selected-card-item {
